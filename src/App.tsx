@@ -1,8 +1,9 @@
 import { useState } from 'react';
+import { InputAdd } from './components/InputAdd';
 
 export function App() {
 
-  const [value, setValue] = useState('');
+ 
   const [list, setList] = useState([
     { id: '1', label: 'Fazer cafe', complete: false },
     { id: '2', label: 'Fazer cafe', complete: false },
@@ -13,18 +14,16 @@ export function App() {
   return (
     <div>
 
-      <input value={value}
-        onChange={(e) => setValue(e.target.value)} />
-
-      <button onClick={() => {
+      <InputAdd 
+      onAdd={(value) => { 
         setList([...list,
-        { id: (list.length + 1).toString(), label: value, complete: false }
-        ]);
-        setValue('');
-      }
-      }>
+           { id: (list.length+1).toString(), complete: false, label: value }
 
-        Adicionar</button>
+        ])
+      }}
+      />
+
+      
 
       <ol>
         {list.map(listItem => (
