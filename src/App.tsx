@@ -1,13 +1,14 @@
 import { useState } from 'react';
 
 export function App() {
-  const [value, setValue] = useState('')
+
+  const [value, setValue] = useState('');
   const [list, setList] = useState([
-    { id: '1', label: 'Fazer cafe', },
-    { id: '2', label: 'Fazer cafe', },
-    { id: '3', label: 'Fazer almoco', },
-    { id: '4', label: 'Fazer Janta', }
-  ])
+    { id: '1', label: 'Fazer cafe', complete: false },
+    { id: '2', label: 'Fazer cafe', complete: false },
+    { id: '3', label: 'Fazer almoco', complete: false },
+    { id: '4', label: 'Fazer Janta', complete: false }
+  ]);
 
   return (
     <div>
@@ -17,7 +18,7 @@ export function App() {
 
       <button onClick={() => {
         setList([...list,
-        { id: (list.length + 1).toString(), label: value }
+        { id: (list.length + 1).toString(), label: value, complete: false }
         ]);
         setValue('');
       }
@@ -27,7 +28,27 @@ export function App() {
 
       <ol>
         {list.map(listItem => (
-          <li key={listItem.id}>{listItem.label}</li>
+          <li key={listItem.id}>{listItem.label}
+
+            {listItem.complete ? 'Concluído' : ''}
+
+            <button onClick={() => 
+              setList([
+                ...list.map(item => ({
+                   ...item, 
+                   complete: item.id === listItem.id? !item.complete : item.complete 
+                  }))]
+                   )}>  
+
+              Concluir
+            </button>
+
+            <button onClick={() => setList([...list.filter(item => item.id != listItem.id)])}>
+              Remover
+            </button>
+
+          </li>
+
         ))}
       </ol>
 
